@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import lt.techin.exam.dto.ViewSubItemDto;
+import lt.techin.exam.dto.EmployeeDto;
 import lt.techin.exam.service.ViewSubItemService;
 
 @CrossOrigin("*")
@@ -31,13 +31,13 @@ public class ViewSubItemController {
 	private ViewSubItemService viewSubItemService;
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@GetMapping("viewItems/{viewItemId}/viewSubItems")
-	public ResponseEntity<List<ViewSubItemDto>> getViewSubItems(
+	public ResponseEntity<List<EmployeeDto>> getViewSubItems(
 			@PathVariable(value = "viewItemId") Long viewItemId){
 		return new ResponseEntity<>(viewSubItemService.getViewSubItems(viewItemId), HttpStatus.OK);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@GetMapping("viewItems/{viewItemId}/viewSubItems/{id}")
-	public ResponseEntity<ViewSubItemDto> getViewSubItemById(
+	public ResponseEntity<EmployeeDto> getViewSubItemById(
 			@PathVariable(value = "viewItemId") Long viewItemId, 
 			@PathVariable(value = "id") Long id){
 		return new ResponseEntity<>(viewSubItemService.getViewSubItemById(viewItemId, id), HttpStatus.OK);
@@ -46,7 +46,7 @@ public class ViewSubItemController {
 	@PostMapping("viewItems/{viewItemId}/viewSubItems")
 	public ResponseEntity<HttpStatus> createViewSubItem(
 			@PathVariable(value = "viewItemId") Long viewItemId, 
-			@RequestBody ViewSubItemDto viewSubItemDto){
+			@RequestBody EmployeeDto viewSubItemDto){
 		viewSubItemService.createViewSubItem(viewItemId, viewSubItemDto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
@@ -55,7 +55,7 @@ public class ViewSubItemController {
 	public ResponseEntity<HttpStatus> updateViewSubItem(
 			@PathVariable(value = "viewItemId") Long viewItemId, 
 			@PathVariable(value = "id") Long id, 
-			@RequestBody ViewSubItemDto viewSubItemDto){
+			@RequestBody EmployeeDto viewSubItemDto){
 		viewSubItemService.updateViewSubItem(viewItemId, id, viewSubItemDto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

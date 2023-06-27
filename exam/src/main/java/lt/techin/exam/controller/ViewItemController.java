@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import lt.techin.exam.dto.ViewItemDto;
+import lt.techin.exam.dto.AutoServiceDto;
 import lt.techin.exam.security.CustomUserDetails;
 import lt.techin.exam.service.ViewItemService;
 
@@ -33,23 +33,23 @@ public class ViewItemController {
 	private ViewItemService viewItemService;
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@GetMapping
-	public ResponseEntity<List<ViewItemDto>> getViewItems(@AuthenticationPrincipal CustomUserDetails currentUser){
+	public ResponseEntity<List<AutoServiceDto>> getViewItems(@AuthenticationPrincipal CustomUserDetails currentUser){
 		return new ResponseEntity<>(viewItemService.getViewItems(), HttpStatus.OK);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@GetMapping("/{id}")
-	public ResponseEntity<ViewItemDto> getViewItemById(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long id){
+	public ResponseEntity<AutoServiceDto> getViewItemById(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long id){
 		return new ResponseEntity<>(viewItemService.getViewItemById(id), HttpStatus.OK);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@PostMapping()
-	public ResponseEntity<HttpStatus> createViewItem(@AuthenticationPrincipal CustomUserDetails currentUser, @RequestBody ViewItemDto viewItemDto){
+	public ResponseEntity<HttpStatus> createViewItem(@AuthenticationPrincipal CustomUserDetails currentUser, @RequestBody AutoServiceDto viewItemDto){
 		viewItemService.createViewItem(viewItemDto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@PatchMapping("/{id}")
-	public ResponseEntity<HttpStatus> updateViewItem(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long id, @RequestBody ViewItemDto viewItemDto){
+	public ResponseEntity<HttpStatus> updateViewItem(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long id, @RequestBody AutoServiceDto viewItemDto){
 		viewItemService.updateViewItem(id, viewItemDto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

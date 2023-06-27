@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import lt.techin.exam.dto.PostItemDto;
+import lt.techin.exam.dto.EmployeeRatingDto;
 import lt.techin.exam.security.CustomUserDetails;
 import lt.techin.exam.service.PostItemService;
 
@@ -33,26 +33,26 @@ public class PostItemController {
 	private PostItemService postItemService;
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@GetMapping
-	public ResponseEntity<List<PostItemDto>> getPostItems(@AuthenticationPrincipal CustomUserDetails currentUser){
+	public ResponseEntity<List<EmployeeRatingDto>> getPostItems(@AuthenticationPrincipal CustomUserDetails currentUser){
 		Long userId = currentUser.getId();
 		return new ResponseEntity<>(postItemService.getPostItems(userId), HttpStatus.OK);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@GetMapping("/{id}")
-	public ResponseEntity<PostItemDto> getPostItemById(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long id){
+	public ResponseEntity<EmployeeRatingDto> getPostItemById(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long id){
 		Long userId = currentUser.getId();
 		return new ResponseEntity<>(postItemService.getPostItemById(id, userId), HttpStatus.OK);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@PostMapping()
-	public ResponseEntity<HttpStatus> createPostItem(@AuthenticationPrincipal CustomUserDetails currentUser, @RequestBody PostItemDto postItemDto){
+	public ResponseEntity<HttpStatus> createPostItem(@AuthenticationPrincipal CustomUserDetails currentUser, @RequestBody EmployeeRatingDto postItemDto){
 		Long userId = currentUser.getId();
 		postItemService.createPostItem(userId, postItemDto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@PatchMapping("/{id}")
-	public ResponseEntity<HttpStatus> updatePostItem(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long id, @RequestBody PostItemDto postItemDto){
+	public ResponseEntity<HttpStatus> updatePostItem(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long id, @RequestBody EmployeeRatingDto postItemDto){
 		Long userId = currentUser.getId();
 		postItemService.updatePostItem(id, userId,postItemDto);
 		return new ResponseEntity<>(HttpStatus.OK);

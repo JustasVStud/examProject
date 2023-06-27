@@ -7,47 +7,47 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lt.techin.exam.dto.ViewItemDto;
-import lt.techin.exam.entity.ViewItem;
+import lt.techin.exam.dto.AutoServiceDto;
+import lt.techin.exam.entity.AutoService;
 import lt.techin.exam.exception.NoEntries;
 import lt.techin.exam.exception.NotFound;
-import lt.techin.exam.repository.ViewItemRepository;
+import lt.techin.exam.repository.AutoServiceRepository;
 
 @Service
 public class ViewItemService {
 	
 	@Autowired
-	private ViewItemRepository viewItemRepository;
+	private AutoServiceRepository viewItemRepository;
 	
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public List<ViewItemDto> getViewItems() {
-		List<ViewItem> viewItems = viewItemRepository.findAll();
-		if (viewItems.isEmpty()) {
+	public List<AutoServiceDto> getViewItems() {
+		List<AutoService> autoServices = viewItemRepository.findAll();
+		if (autoServices.isEmpty()) {
 			throw new NoEntries("viewItems");
 		}
-		return viewItems.stream().map(viewItem -> modelMapper.map(viewItem, ViewItemDto.class)).toList();
+		return autoServices.stream().map(viewItem -> modelMapper.map(viewItem, AutoServiceDto.class)).toList();
 	}
 	 
-	public ViewItemDto getViewItemById(Long id) {
-		ViewItem viewItem =  viewItemRepository.findById(id).orElseThrow(() -> new NotFound("viewItem", "id", id.toString()));
-		return modelMapper.map(viewItem, ViewItemDto.class);
+	public AutoServiceDto getViewItemById(Long id) {
+		AutoService autoService =  viewItemRepository.findById(id).orElseThrow(() -> new NotFound("viewItem", "id", id.toString()));
+		return modelMapper.map(autoService, AutoServiceDto.class);
 	}
 	
-	public void createViewItem(ViewItemDto viewItemDto) { 
-		ViewItem viewItem = modelMapper.map(viewItemDto, ViewItem.class);
-		viewItemRepository.save(viewItem);
+	public void createViewItem(AutoServiceDto viewItemDto) { 
+		AutoService autoService = modelMapper.map(viewItemDto, AutoService.class);
+		viewItemRepository.save(autoService);
 	}
 	
-	public void updateViewItem(Long id, ViewItemDto updatedViewItemDto) {
-		ViewItem existingViewItem = viewItemRepository.findById(id).orElseThrow(() -> new NotFound("viewItem", "id", id.toString()));
+	public void updateViewItem(Long id, AutoServiceDto updatedViewItemDto) {
+		AutoService existingViewItem = viewItemRepository.findById(id).orElseThrow(() -> new NotFound("viewItem", "id", id.toString()));
 		existingViewItem.setTitle(updatedViewItemDto.getTitle());
 		viewItemRepository.save(existingViewItem);
 	}
 	
 	public void deleteViewItem(Long id) {
-		ViewItem viewItem =  viewItemRepository.findById(id).orElseThrow(() -> new NotFound("viewItem", "id", id.toString()));
-		viewItemRepository.delete(viewItem);
+		AutoService autoService =  viewItemRepository.findById(id).orElseThrow(() -> new NotFound("viewItem", "id", id.toString()));
+		viewItemRepository.delete(autoService);
 	}
 }

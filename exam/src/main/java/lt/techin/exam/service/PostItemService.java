@@ -8,61 +8,61 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import lt.techin.exam.dto.PostItemDto;
-import lt.techin.exam.entity.PostItem;
+import lt.techin.exam.dto.EmployeeRatingDto;
+import lt.techin.exam.entity.EmployeeRating;
 import lt.techin.exam.entity.User;
 import lt.techin.exam.exception.NoEntries;
 import lt.techin.exam.exception.NotFound;
-import lt.techin.exam.repository.PostItemRepository;
+import lt.techin.exam.repository.EmployeeRatingRepository;
 import lt.techin.exam.repository.UserRepository;
 
 @Service
 public class PostItemService {
 	
 	@Autowired
-	private PostItemRepository postItemRepository;
+	private EmployeeRatingRepository employeeRatingRepository;
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public List<PostItemDto> getPostItems(Long userId) {
-		List<PostItem> postItems = postItemRepository.findPostItems(userId);
-		if (postItems.isEmpty()) {
+	public List<EmployeeRatingDto> getPostItems(Long userId) {
+		List<EmployeeRating> employeeRatings = employeeRatingRepository.findPostItems(userId);
+		if (employeeRatings.isEmpty()) {
 			throw new NoEntries("postItems");
 		}
-		return postItems.stream().map(postItem -> modelMapper.map(postItem, PostItemDto.class)).toList();
+		return employeeRatings.stream().map(postItem -> modelMapper.map(postItem, EmployeeRatingDto.class)).toList();
 	}
 	 
-	public PostItemDto getPostItemById(Long id, Long userId) {
-		PostItem postItem =  postItemRepository.findById(id).orElseThrow(() -> new NotFound("postItem", "id", id.toString()));
-		if(!postItem.getUser().getId().equals(userId)) {
+	public EmployeeRatingDto getPostItemById(Long id, Long userId) {
+		EmployeeRating employeeRating =  employeeRatingRepository.findById(id).orElseThrow(() -> new NotFound("postItem", "id", id.toString()));
+		if(!employeeRating.getUser().getId().equals(userId)) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user");
 		}
-		return modelMapper.map(postItem, PostItemDto.class);
+		return modelMapper.map(employeeRating, EmployeeRatingDto.class);
 	}
 	
-	public void createPostItem(Long userId, PostItemDto postItemDto) { 
-		PostItem postItem = modelMapper.map(postItemDto, PostItem.class);
+	public void createPostItem(Long userId, EmployeeRatingDto postItemDto) { 
+		EmployeeRating employeeRating = modelMapper.map(postItemDto, EmployeeRating.class);
 		User user = userRepository.findById(userId).orElseThrow(() -> new NotFound("user", "id", userId.toString()));
-		postItem.setUser(user);
-		postItemRepository.save(postItem);
+		employeeRating.setUser(user);
+		employeeRatingRepository.save(employeeRating);
 	}
 	
-	public void updatePostItem(Long id, Long userId, PostItemDto updatedPostItemDto) {
-		PostItem existingPostItem = postItemRepository.findById(id).orElseThrow(() -> new NotFound("postItem", "id", id.toString()));
+	public void updatePostItem(Long id, Long userId, EmployeeRatingDto updatedPostItemDto) {
+		EmployeeRating existingPostItem = employeeRatingRepository.findById(id).orElseThrow(() -> new NotFound("postItem", "id", id.toString()));
 		if(!existingPostItem.getUser().getId().equals(userId)) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user");
 		}
 		existingPostItem.setTitle(updatedPostItemDto.getTitle());
-		postItemRepository.save(existingPostItem);
+		employeeRatingRepository.save(existingPostItem);
 	}
 	
 	public void deletePostItem(Long id, Long userId) {
-		PostItem postItem =  postItemRepository.findById(id).orElseThrow(() -> new NotFound("postItem", "id", id.toString()));
-		if(!postItem.getUser().getId().equals(userId)) {
+		EmployeeRating employeeRating =  employeeRatingRepository.findById(id).orElseThrow(() -> new NotFound("postItem", "id", id.toString()));
+		if(!employeeRating.getUser().getId().equals(userId)) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user");
 		}
-		postItemRepository.delete(postItem);
+		employeeRatingRepository.delete(employeeRating);
 	}
 }

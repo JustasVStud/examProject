@@ -1,5 +1,7 @@
 package lt.techin.exam.dto;
 
+import java.math.BigDecimal;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostSubItemDto {
+public class EmployeeRatingDto {
 	private Long id;
-	private String title;
+	private BigDecimal rating;
+	private Long employeeId;
 }

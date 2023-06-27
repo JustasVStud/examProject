@@ -1,5 +1,7 @@
 package lt.techin.exam.entity;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,17 +16,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "post_sub_item")
+@Table(name = "employee_rating")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostSubItem {
+public class EmployeeRating {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name = "title")
-	private String title;
+	@Column(name = "rating")
+	private BigDecimal rating;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "post_item_id", nullable = false)
-	private PostItem postItem;
+    @JoinColumn(name = "user_id")
+	private User user;
+	@JoinColumn(name = "employee_id", nullable = false)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	private Employee employee;
 }

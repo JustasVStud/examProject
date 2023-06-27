@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ViewItemDto {
+public class AutoServiceDto {
 	private Long id;
 	private String title;
+	private String address;
+	private Long directorId;
 }

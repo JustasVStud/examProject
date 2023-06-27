@@ -7,7 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostItemDto {
+public class EmployeeDto {
 	private Long id;
-	private String title;
+	private String name;
+	private String surname;
+	private String specialty;
+	private String city;
+	private String autoServiceId;
 }
