@@ -41,10 +41,6 @@ public class AutoServiceService {
 	public void createAutoService(AutoServiceDto autoServiceDto) { 
 		System.out.println(autoServiceDto);
 		AutoService autoService = modelMapper.map(autoServiceDto, AutoService.class);
-		if(autoServiceDto.getDirectorId() != null) {			
-			Employee director = employeeRepository.findById(autoServiceDto.getDirectorId()).orElseThrow(() -> new NotFound("director from employees", "id", autoServiceDto.getDirectorId().toString()));
-			autoService.setDirector(director);
-		}
 		autoServiceRepository.save(autoService);
 	}
 	
@@ -52,10 +48,7 @@ public class AutoServiceService {
 		AutoService existingAutoService = autoServiceRepository.findById(id).orElseThrow(() -> new NotFound("autoService", "id", id.toString()));
 		existingAutoService.setTitle(updatedAutoServiceDto.getTitle());
 		existingAutoService.setAddress(updatedAutoServiceDto.getAddress());
-		if(!Objects.equals(existingAutoService.getDirector().getId(), updatedAutoServiceDto.getDirectorId())) {
-			Employee director = employeeRepository.findById(updatedAutoServiceDto.getDirectorId()).orElseThrow(() -> new NotFound("director from employees", "id", updatedAutoServiceDto.getDirectorId().toString()));
-			existingAutoService.setDirector(director);
-		}
+		existingAutoService.setDirector(updatedAutoServiceDto.getDirector());
 		autoServiceRepository.save(existingAutoService);
 	}
 	

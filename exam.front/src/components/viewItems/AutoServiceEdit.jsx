@@ -34,7 +34,7 @@ function AutoServiceEdit() {
   
   const handleAutoServiceUpdate = async (values, {resetForm}) => {
     try {
-      await editAutoService(values.title); 
+      await editAutoService(values); 
       resetForm();
       navigate('/autoServices');
     } catch (error) {
@@ -60,6 +60,8 @@ function AutoServiceEdit() {
         <Formik
           initialValues={{
             title: autoService.title,
+            address: autoService.address,
+            director: autoService.director
           }}
           validationSchema={autoServiceValidationSchema}
           onSubmit={(values, { resetForm }) => {
@@ -89,6 +91,32 @@ function AutoServiceEdit() {
                   isInvalid={touched.title && !!errors.title}
                 />
                 <Form.Control.Feedback type="invalid">{errors.title}</Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Address</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="address"
+                  size="sm"
+                  value={values.address}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isInvalid={touched.address && !!errors.address}
+                />
+                <Form.Control.Feedback type="invalid">{errors.address}</Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Director</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="director"
+                  size="sm"
+                  value={values.director}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isInvalid={touched.director && !!errors.director}
+                />
+                <Form.Control.Feedback type="invalid">{errors.director}</Form.Control.Feedback>
               </Form.Group>
               <Row className="form-buttons-container">
                 <Col>

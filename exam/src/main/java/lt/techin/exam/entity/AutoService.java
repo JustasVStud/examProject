@@ -31,9 +31,9 @@ public class AutoService {
 	private String title;
 	@Column(name = "address")
 	private String address;
+	@Column(name = "director")
+	private String director;
 	@OneToMany(mappedBy = "autoService", cascade = CascadeType.ALL, orphanRemoval = false)
 	private List<Employee> employees = new ArrayList<>();
-	@JoinColumn(name = "director_id", nullable = true)
-	@ManyToOne(optional = true, fetch = FetchType.EAGER)
-	private Employee director;
+
 }

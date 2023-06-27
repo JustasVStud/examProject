@@ -11,5 +11,5 @@ public class AutoServiceDto {
 	private Long id;
 	private String title;
 	private String address;
-	private Long directorId;
+	private String director;
 }
