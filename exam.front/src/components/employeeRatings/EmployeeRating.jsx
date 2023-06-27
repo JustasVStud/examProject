@@ -10,6 +10,7 @@ function EmployeeRating(id) {
 
     const fetchEmployeeRating = async(id) => {
         try{
+          console.log(id)
             setIsLoading(true);
             const employeeRating = await getEmployeeRating(id);
             setEmployeeRating(employeeRating);
@@ -24,7 +25,6 @@ function EmployeeRating(id) {
       useEffect(() => {
         if(id !== undefined){
             fetchEmployeeRating(id);
-
         }
       }, [id]);
 
@@ -32,10 +32,10 @@ function EmployeeRating(id) {
     return ( 
       <Col>
       {isLoading ? (
-        <span>0.0</span>
+        <span>0</span>
     ): (
           <span>
-           Rating: {employeeRating.rating}
+           Rating: {employeeRating}
           </span>
       )}
         </Col>

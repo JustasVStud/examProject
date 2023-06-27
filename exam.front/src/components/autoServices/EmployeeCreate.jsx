@@ -106,7 +106,7 @@ function EmployeeCreation() {
                 <Form.Control.Feedback type="invalid">{errors.surname}</Form.Control.Feedback>
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>Surname</Form.Label>
+                <Form.Label>Speacialty</Form.Label>
                 <Form.Control
                   type="text"
                   name="specialty"
@@ -119,7 +119,7 @@ function EmployeeCreation() {
                 <Form.Control.Feedback type="invalid">{errors.specialty}</Form.Control.Feedback>
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>Surname</Form.Label>
+                <Form.Label>City</Form.Label>
                 <Form.Control
                   type="text"
                   name="city"

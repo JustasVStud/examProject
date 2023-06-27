@@ -4,8 +4,9 @@ import { authHeader } from '../auth/auth.service';
 const BASE_URL = 'http://localhost:8080/api/employeeRatings'
 
 export const getEmployeeRating = async(employeeId) => {
+    console.log(employeeId)
     try{
-        const response = await axios.get(`${BASE_URL}/${employeeId}`, {
+        const response = await axios.get(`${BASE_URL}/${employeeId.id}`, {
             headers: authHeader()
         });
         return response.data;

@@ -38,8 +38,7 @@ public class EmployeeRatingController {
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@PostMapping()
 	public ResponseEntity<HttpStatus> createEmployeeRating(@AuthenticationPrincipal CustomUserDetails currentUser, @RequestBody EmployeeRatingDto employeeRatingDto){
-		Long userId = currentUser.getId();
-		employeeRatingService.createEmployeeRating(userId, employeeRatingDto);
+		employeeRatingService.createEmployeeRating(employeeRatingDto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 }
