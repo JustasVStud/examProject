@@ -3,9 +3,9 @@ import { authHeader } from '../auth/auth.service';
 
 const BASE_URL = 'http://localhost:8080/api/employeeRatings'
 
-export const getEmployeeRatings = async() => {
+export const getEmployeeRating = async(employeeId) => {
     try{
-        const response = await axios.get(BASE_URL, {
+        const response = await axios.get(`${BASE_URL}/${employeeId}`, {
             headers: authHeader()
         });
         return response.data;
@@ -14,9 +14,9 @@ export const getEmployeeRatings = async() => {
     }
 }
 
-export const getEmployeeRating= async(id) => {
+export const createEmployeeRating = async(values) => {
     try{
-        const response = await axios.get(`${BASE_URL}/${id}`, {
+        const response = await axios.post(`${BASE_URL}`, {values}, {
             headers: authHeader()
         });
         return response.data;
@@ -25,35 +25,3 @@ export const getEmployeeRating= async(id) => {
     }
 }
 
-export const createEmployeeRating = async(title) => {
-    try{
-        const response = await axios.post(`${BASE_URL}`, {title}, {
-            headers: authHeader()
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-}
-
-export const editEmployeeRating = async(id, title) => {
-    try {
-        const response = await axios.patch(`${BASE_URL}/${id}`, {title}, {
-            headers: authHeader()
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-}
-
-export const deleteEmployeeRating = async(id) => {
-    try{
-        const response = await axios.delete(`${BASE_URL}/${id}`, {
-            headers: authHeader()
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-}

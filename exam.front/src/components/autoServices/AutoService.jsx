@@ -77,6 +77,7 @@ function AutoService() {
                 <Row>There are no currently no employess in this auto service</Row>
               )}
               </Row>
+              {isAdmin && 
               <Row>
                 <Button variant='warning'>
                   <Link to={`/autoServices/${autoService.id}/edit`}>Edit View Item</Link>
@@ -85,6 +86,7 @@ function AutoService() {
                   <Link to={`/employees/create`}>Add employee</Link>
                 </Button>
               </Row>
+              }
             </>
               )  : (
                 <Row>not found</Row>

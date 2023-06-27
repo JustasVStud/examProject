@@ -4,11 +4,13 @@ import { Link } from 'react-router-dom';
 
 import { getAutoServices } from '../service/autoService.service';
 import { deleteAutoService } from '../service/autoService.service';
-
-
+import { AuthContext } from '../auth/AuthContext';
+import { useContext } from 'react';
 function AutoServiceList() {
     const [autoServices, setAutoServices] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const authContext = useContext(AuthContext);
+    const isAdmin = authContext.hasRole('ADMIN');
   const fetchAutoServices = async () => {
     try {
       setIsLoading(true);
@@ -50,7 +52,7 @@ function AutoServiceList() {
                   <Link to={`/autoServices/${autoService.id}`}>
                     <Card.Body>
                       <Card.Title>{autoService.title}</Card.Title>
-                      <Button onClick={() => handleAutoServiceDelete(autoService.id)}>Delete Auto Service</Button>
+                      {isAdmin && <Button onClick={() => handleAutoServiceDelete(autoService.id)}>Delete Auto Service</Button>}
                     </Card.Body>
                   </Link>
                 </Card>
@@ -60,6 +62,7 @@ function AutoServiceList() {
             )
         )}
       </Row>
+      {isAdmin &&      
         <Row>
             <Button variant="sucess">
               <Link to="/autoServices/create">
@@ -67,6 +70,7 @@ function AutoServiceList() {
               </Link>
             </Button>
         </Row>
+      }
     </Container>
   );
 }

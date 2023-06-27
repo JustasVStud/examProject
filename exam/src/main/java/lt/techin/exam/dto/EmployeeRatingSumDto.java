@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeRatingDto {
-	private Long id;
-	private BigDecimal rating;
+public class EmployeeRatingSumDto {
+	private BigDecimal ratingSum;
 }

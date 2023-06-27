@@ -8,7 +8,6 @@ import Home from './components/main/Home';
 
 import EmployeeRating from './components/employeeRatings/EmployeeRating';
 import EmployeeRatingCreate from './components/employeeRatings/EmployeeRatingCreate';
-import EmployeeRatingEdit from './components/employeeRatings/EmployeeRatingEdit';
 
 import AutoService from './components/autoServices/AutoService';
 import AutoServiceCreate from './components/autoServices/AutoServiceCreate';
@@ -26,7 +25,6 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/employeeRatings/:id' element={<EmployeeRating/>}/>
           <Route path='/employeeRatings/create' element={<EmployeeRatingCreate/>}/>
-          <Route path='/employeeRatings/:id/edit' element={<EmployeeRatingEdit/>}/>
 
           <Route path='/autoServices/:id' element={<AutoService/>}/>
           <Route path='/autoServices/create' element={<AutoServiceCreate/>}/>

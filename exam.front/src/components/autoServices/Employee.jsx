@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Card, Row, Col, Button } from 'react-bootstrap';
 import { deleteEmployee } from '../service/autoService.service';
+import { AuthContext } from '../auth/AuthContext';
+import { useContext } from 'react';
+import EmployeeRating from '../employeeRatings/EmployeeRating';
 function Employee({employee, employeeId, onDelete}) {
-
+  const authContext = useContext(AuthContext);
+  const isAdmin = authContext.hasRole('ADMIN');
     const handleEmployeeDelete = async () => {
       try {
         await deleteEmployee(employeeId);
@@ -11,26 +15,24 @@ function Employee({employee, employeeId, onDelete}) {
         console.log(error);
       }
     };
-    
+
     return ( 
         <Card>
             <Card.Body>
                 <Row>
                 <Col>
-                    {employee.name}
+                    Name: {employee.name}
                 </Col>
                 <Col>
-                    {employee.surname}
+                    Surname: {employee.surname}
                 </Col>
                 <Col>
-                    {employee.specialty}
+                    Specialty:{employee.specialty}
                 </Col>
                 <Col>
-                    {employee.city}
+                    City:{employee.city}
                 </Col>
-                <Col>
-                    <Link to={`/employees/${employeeId}`}>Edit employee</Link>
-                </Col>
+                <EmployeeRating id={employee.id}/>
                 <Col>
                     <Link to={`/employeeRatings/create`}>
                       <Button>
@@ -38,7 +40,14 @@ function Employee({employee, employeeId, onDelete}) {
                       </Button>
                       </Link>
                 </Col>
+                {isAdmin && 
+                <>
+                <Col>
+                    <Link to={`/employees/${employeeId}`}>Edit employee</Link>
+                </Col>
                 <Col><Button onClick={handleEmployeeDelete}>Delete employee</Button></Col>
+                </>
+                }
 
                 </Row>
             </Card.Body>

@@ -1,7 +1,7 @@
 import { Container, Form, Row, Col, Button, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import { createEmployeeRating } from '../service/employeeRating.service';
 
@@ -13,12 +13,13 @@ function EmployeeRatingCreate() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const [showError, setShowError] = useState(false);
+  const {employeeId} = useParams();
 
   const handleEmployeeRatingCreation = async (values, {resetForm}) => {
     try {
-      await createEmployeeRating(values.title); 
+      await createEmployeeRating(values); 
       resetForm();
-      navigate('/employeeRatings');
+      navigate(`/employees/${employeeId}`);
     } catch (error) {
       console.log(error);
       setShowError(true);
@@ -62,8 +63,8 @@ function EmployeeRatingCreate() {
               <Form.Group className="mb-3">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
-                  type="text"
-                  name="title"
+                  type="number"
+                  name="rating"
                   size="sm"
                   value={values.title}
                   onChange={handleChange}
