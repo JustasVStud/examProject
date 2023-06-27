@@ -32,42 +32,35 @@ public class EmployeeService {
 		}
 		return employees.stream().map(employee -> modelMapper.map(employee, EmployeeDto.class)).toList();
 	}
+	
 	public EmployeeDto getEmployeeById(Long id) {
 		Employee employee = employeeRepository.findById(id).orElseThrow(() -> new NotFound("employee", "id", id.toString()));
 		return modelMapper.map(employee, EmployeeDto.class);
 	}
-	
-	public EmployeeDto getEmployeeById(Long autoServiceId, Long id) {
-		AutoService autoService = autoServiceRepository.findById(autoServiceId).orElseThrow(() -> new NotFound("autoService", "id", autoServiceId.toString()));
-		Employee employee = employeeRepository.findById(id).orElseThrow(() -> new NotFound("employee", "id", id.toString()));
-		if(!employee.getAutoService().getId().equals(autoService.getId())) {
-			throw new EntityMismatch("employee", id.toString(), "autoService", autoServiceId.toString());
-		}
-		return modelMapper.map(employee, EmployeeDto.class);
-	}
-	public void createEmployee(Long autoServiceId, EmployeeDto employeeDto) {
-		AutoService autoService = autoServiceRepository.findById(autoServiceId).orElseThrow(() -> new NotFound("autoService", "id", autoServiceId.toString()));
+	public void createEmployee(EmployeeDto employeeDto) {
+		AutoService autoService = autoServiceRepository.findById(employeeDto.getAutoServiceId()).orElseThrow(() -> new NotFound("autoService", "id", employeeDto.getAutoServiceId().toString()));
 		Employee employee = modelMapper.map(employeeDto, Employee.class);
 		employee.setAutoService(autoService);
 		employeeRepository.save(employee);
 	}
 	
-	public void updateEmployee(Long autoServiceId, Long id, EmployeeDto updatedEmployeeDto) {
-		AutoService autoService = autoServiceRepository.findById(autoServiceId).orElseThrow(() -> new NotFound("autoService", "id", autoServiceId.toString()));
+	public void updateEmployee(Long id, EmployeeDto updatedEmployeeDto) {
+		AutoService autoService = autoServiceRepository.findById(updatedEmployeeDto.getAutoServiceId()).orElseThrow(() -> new NotFound("autoService", "id", updatedEmployeeDto.getAutoServiceId().toString()));
 		Employee existingEmployee = employeeRepository.findById(id).orElseThrow(() -> new NotFound("employee", "id", id.toString()));
+		existingEmployee.setName(updatedEmployeeDto.getName());
+		existingEmployee.setSurname(updatedEmployeeDto.getSurname());
+		existingEmployee.setSpecialty(updatedEmployeeDto.getSpecialty());
+		existingEmployee.setCity(updatedEmployeeDto.getCity());
 		if(!existingEmployee.getAutoService().getId().equals(autoService.getId())) {
-			throw new EntityMismatch("employee", id.toString(), "autoService", autoServiceId.toString());
+			existingEmployee.setAutoService(autoService);
 		}
-		//existingEmployee.setTitle(updatedEmployeeDto.getTitle());
+		
 		employeeRepository.save(existingEmployee);
 	}
 	
-	public void deleteEmployee(Long autoServiceId, Long id) {
-		AutoService autoService = autoServiceRepository.findById(autoServiceId).orElseThrow(() -> new NotFound("autoService", "id", autoServiceId.toString()));
+	public void deleteEmployee( Long id) {
 		Employee employee = employeeRepository.findById(id).orElseThrow(() -> new NotFound("employee", "id", id.toString()));
-		if(!employee.getAutoService().getId().equals(autoService.getId())) {
-			throw new EntityMismatch("employee", id.toString(), "autoService", autoServiceId.toString());
-		}
+
 		employeeRepository.delete(employee);
 	}
 	

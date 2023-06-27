@@ -24,47 +24,43 @@ import lt.techin.exam.service.EmployeeService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/")
+@RequestMapping("api/employees")
 public class EmployeeController {
 	
 	@Autowired
 	private EmployeeService employeeService;
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-	@GetMapping("autoServices/{autoServiceId}/employees")
+	@GetMapping("/{autoServiceId}")
 	public ResponseEntity<List<EmployeeDto>> getEmployees(
 			@PathVariable(value = "autoServiceId") Long autoServiceId){
 		return new ResponseEntity<>(employeeService.getEmployees(autoServiceId), HttpStatus.OK);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-	@GetMapping("autoServices/{autoServiceId}/employees/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<EmployeeDto> getEmployeeById(
-			@PathVariable(value = "autoServiceId") Long autoServiceId, 
 			@PathVariable(value = "id") Long id){
-		return new ResponseEntity<>(employeeService.getEmployeeById(autoServiceId, id), HttpStatus.OK);
+		return new ResponseEntity<>(employeeService.getEmployeeById(id), HttpStatus.OK);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-	@PostMapping("autoServices/{autoServiceId}/employees")
-	public ResponseEntity<HttpStatus> createEmployee(
-			@PathVariable(value = "autoServiceId") Long autoServiceId, 
+	@PostMapping
+	public ResponseEntity<HttpStatus> createEmployee( 
 			@RequestBody EmployeeDto employeeDto){
-		employeeService.createEmployee(autoServiceId, employeeDto);
+		employeeService.createEmployee(employeeDto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-	@PatchMapping("autoServices/{autoServiceId}/employees/{id}")
-	public ResponseEntity<HttpStatus> updateEmployee(
-			@PathVariable(value = "autoServiceId") Long autoServiceId, 
+	@PatchMapping("/{id}")
+	public ResponseEntity<HttpStatus> updateEmployee( 
 			@PathVariable(value = "id") Long id, 
 			@RequestBody EmployeeDto employeeDto){
-		employeeService.updateEmployee(autoServiceId, id, employeeDto);
+		employeeService.updateEmployee(id, employeeDto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-	@DeleteMapping("autoServices/{autoServiceId}/employees/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<HttpStatus> deleteEmployee(
-			@PathVariable(value = "autoServiceId") Long autoServiceId, 
 			@PathVariable(value = "id") Long id){
-		employeeService.deleteEmployee(autoServiceId, id);
+		employeeService.deleteEmployee(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

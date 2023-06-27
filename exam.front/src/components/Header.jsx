@@ -13,8 +13,7 @@ function Header() {
                         <Nav.Link href='/login'>Login</Nav.Link>
                     ) : (
                         <>
-                        <Nav.Link href='/viewItems'>View Items</Nav.Link>
-                        <Nav.Link href='/postItems'>Post Items</Nav.Link>
+                        <Nav.Link href='/autoServices'>Auto Services</Nav.Link>
                         </>
                     )}
                 </Nav>

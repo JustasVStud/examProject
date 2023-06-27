@@ -39,6 +39,8 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/employeeRatings/**").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers(HttpMethod.GET, "/api/autoServices/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/autoServices/**").hasAuthority(ADMIN)
+                        .requestMatchers(HttpMethod.GET, "/api/employees/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/employees/**").hasAuthority(ADMIN)
                         .requestMatchers("/api/users", "/api/users/**").hasAuthority(ADMIN)
                         .requestMatchers("/public/**", "/auth/**").permitAll()
                         .requestMatchers("/",

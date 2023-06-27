@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { authHeader } from '../auth/auth.service';
 
-const BASE_URL = 'http://localhost:8080/api/autoServices'
+const BASE_URL_SERVICE = 'http://localhost:8080/api/autoServices'
+const BASE_URL_EMPLOYEE ='http://localhost:8080/api/employees';
 
 export const getAutoServices = async() => {
     try{
-        const response = await axios.get(BASE_URL, {
+        const response = await axios.get(BASE_URL_SERVICE, {
             headers: authHeader()
         });
         return response.data;
@@ -16,7 +17,7 @@ export const getAutoServices = async() => {
 
 export const getAutoService= async(id) => {
     try{
-        const response = await axios.get(`${BASE_URL}/${id}`, {
+        const response = await axios.get(`${BASE_URL_SERVICE}/${id}`, {
             headers: authHeader()
         });
         return response.data;
@@ -27,9 +28,11 @@ export const getAutoService= async(id) => {
 
 export const createAutoService = async(values) => {
     try{
-        const response = await axios.post(`${BASE_URL}`, values, {
+        console.log(values);
+        const response = await axios.post(`${BASE_URL_SERVICE}`, values, {
             headers: authHeader()
         });
+        console.log(response)
         return response.data;
     } catch (error) {
         throw error;
@@ -38,7 +41,7 @@ export const createAutoService = async(values) => {
 
 export const editAutoService = async(id, values) => {
     try {
-        const response = await axios.patch(`${BASE_URL}/${id}`, values, {
+        const response = await axios.patch(`${BASE_URL_SERVICE}/${id}`, values, {
             headers: authHeader()
         });
         return response.data;
@@ -49,7 +52,7 @@ export const editAutoService = async(id, values) => {
 
 export const deleteAutoService = async(id) => {
     try{
-        const response = await axios.delete(`${BASE_URL}/${id}`, {
+        const response = await axios.delete(`${BASE_URL_SERVICE}/${id}`, {
             headers: authHeader()
         });
         return response.data;
@@ -60,7 +63,7 @@ export const deleteAutoService = async(id) => {
 
 export const getEmployees = async(autoServiceId) => {
     try{
-        const response = await axios.get(`${BASE_URL}/${autoServiceId}/employees`, {
+        const response = await axios.get(`${BASE_URL_EMPLOYEE}/${autoServiceId}`, {
             headers: authHeader()
         });
         return response.data;
@@ -69,9 +72,9 @@ export const getEmployees = async(autoServiceId) => {
     }
 }
 
-export const getEmployee = async(autoServiceId, employeeId) => {
+export const getEmployee = async(employeeId) => {
     try{
-        const response = await axios.get(`${BASE_URL}/${autoServiceId}/employees/${employeeId}`, {
+        const response = await axios.get(`${BASE_URL_EMPLOYEE}/${employeeId}`, {
             headers: authHeader()
         });
         return response.data;
@@ -79,9 +82,9 @@ export const getEmployee = async(autoServiceId, employeeId) => {
         throw error;
     }
 }
-export const createEmployee = async(autoServiceId, values) => {
+export const createEmployee = async(values) => {
     try{
-        const response = await axios.post(`${BASE_URL}/${autoServiceId}/employees`, values, {
+        const response = await axios.post(`${BASE_URL_EMPLOYEE}`, values, {
             headers: authHeader()
         });
         return response.data;
@@ -89,9 +92,9 @@ export const createEmployee = async(autoServiceId, values) => {
         throw error;
     }
 }
-export const editEmployee = async (autoServiceId, employeeId, values ) => {
+export const editEmployee = async (employeeId, values ) => {
     try {
-        const response = await axios.patch(`${BASE_URL}/${autoServiceId}/employees/${employeeId}`,
+        const response = await axios.patch(`${BASE_URL_EMPLOYEE}/${employeeId}`,
         values,
         {
             headers: authHeader()
@@ -102,9 +105,9 @@ export const editEmployee = async (autoServiceId, employeeId, values ) => {
         throw error;
     }
 }
-export const deleteEmployee = async(autoServiceId, employeeId) =>{
+export const deleteEmployee = async( employeeId) =>{
     try {
-        const response = await axios.delete(`${BASE_URL}/${autoServiceId}/employees/${employeeId}`,
+        const response = await axios.delete(`${BASE_URL_EMPLOYEE}/${employeeId}`,
         { headers: authHeader() }
         )
         return response.data;

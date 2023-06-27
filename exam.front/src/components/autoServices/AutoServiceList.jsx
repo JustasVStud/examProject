@@ -50,7 +50,7 @@ function AutoServiceList() {
                   <Link to={`/autoServices/${autoService.id}`}>
                     <Card.Body>
                       <Card.Title>{autoService.title}</Card.Title>
-                      <Button onClick={() => handleAutoServiceDelete(autoService.id)}>Delete AutoService</Button>
+                      <Button onClick={() => handleAutoServiceDelete(autoService.id)}>Delete Auto Service</Button>
                     </Card.Body>
                   </Link>
                 </Card>

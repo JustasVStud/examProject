@@ -1,38 +1,35 @@
 import { Container, Form, Row, Col, Button, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import * as Yup from 'yup';
-import { createViewSubItem } from '../service/viewItem.service';
+import { createEmployee } from '../service/autoService.service';
 
-const viewSubItemValidationSchema = Yup.object().shape({
+const employeeValidationSchema = Yup.object().shape({
   title: Yup.string().required('View Item title is required'),
 });
 
-function ViewSubItemCreation() {
+function EmployeeCreation() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const [showError, setShowError] = useState(false);
-  const {viewItemId} = useParams();
 
-  const handleViewSubItemCreation = async (values, {resetForm}) => {
+  const handleEmployeeCreation = async (values, {resetForm}) => {
     try {
-        if(viewItemId !== undefined){
-            await createViewSubItem(viewItemId, values.title); 
-        }
+            await createEmployee(values); 
       resetForm();
-      navigate(`/viewItems/${viewItemId}`);
+      navigate(`/autoServices`);
     } catch (error) {
       console.log(error);
       setShowError(true);
-      setErrorMessage('Error creating viewSubItem');
+      setErrorMessage('Error creating employee');
     }
   };
 
   return (
     <Container className="form-style">
       <Row>
-        <h3>Create ViewSubItem</h3>
+        <h3>Create Employee</h3>
       </Row>
       {showError && (
         <Row>
@@ -46,9 +43,9 @@ function ViewSubItemCreation() {
           initialValues={{
             title: '',
           }}
-          validationSchema={viewSubItemValidationSchema}
+          validationSchema={employeeValidationSchema}
           onSubmit={(values, { resetForm }) => {
-            handleViewSubItemCreation(values, { resetForm });
+            handleEmployeeCreation(values, { resetForm });
           }}
           enableReinitialize
         >
@@ -63,22 +60,35 @@ function ViewSubItemCreation() {
           }) => (
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3">
-                <Form.Label>Title</Form.Label>
+                <Form.Label>Name</Form.Label>
                 <Form.Control
                   type="text"
-                  name="title"
+                  name="name"
                   size="sm"
-                  value={values.title}
+                  value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={touched.title && !!errors.title}
+                  isInvalid={touched.name && !!errors.name}
                 />
-                <Form.Control.Feedback type="invalid">{errors.title}</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  size="sm"
+                  value={values.name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isInvalid={touched.name && !!errors.name}
+                />
+                <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
               </Form.Group>
               <Row className="form-buttons-container">
                 <Col>
                   <Button variant="primary" type="submit" disabled={!dirty}>
-                    Create ViewSubItem
+                    Create Employee
                   </Button>
                 </Col>
               </Row>
@@ -90,4 +100,4 @@ function ViewSubItemCreation() {
   );
 }
 
-export default ViewSubItemCreation;
+export default EmployeeCreation;

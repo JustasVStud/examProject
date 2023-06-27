@@ -25,8 +25,8 @@ function AutoService() {
     const fetchEmployees = async (id) => {
         try {
           setIsLoading(true);
-          const meals = await getEmployees(id);
-          setEmployees(meals);
+          const employees = await getEmployees(id);
+          setEmployees(employees);
         } catch (error) {
           console.log(error);
         } finally {
@@ -59,18 +59,26 @@ function AutoService() {
                 </h2>
               </Row>
               <Row>
+                <h3> Director: {autoService.director}</h3>
+              </Row>
+              <Row>
+                <h3>Address: {autoService.address}</h3>
+              </Row>
+              <Row>
               {employees.length > 0 ? (
               employees.map((employee) => (
                 <Employee employee={employee} autoServiceId={autoService.id} employeeId={employee.id} key={employee.id} onDelete={handleEmployeeDelete}  />
               ))
-              ):(<></>)}
+              ):(
+                <Row>There are no currently no employess in this auto service</Row>
+              )}
               </Row>
               <Row>
                 <Button variant='warning'>
                   <Link to={`/autoServices/${autoService.id}/edit`}>Edit View Item</Link>
                 </Button>
                 <Button variant='success'>
-                  <Link to={`/autoServices/${autoService.id}/employees/create`}>Add employee</Link>
+                  <Link to={`/employees/create`}>Add employee</Link>
                 </Button>
               </Row>
             </>

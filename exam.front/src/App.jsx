@@ -6,19 +6,16 @@ import Login from './components/user/Login';
 import Header from './components/Header';
 import Home from './components/main/Home';
 
-import PostItem from './components/postItems/PostItem';
-import PostItemCreate from './components/postItems/PostItemCreate';
-import PostItemEdit from './components/postItems/PostItemEdit';
-import PostItemList from './components/postItems/PostItemList';
-import PostSubItemCreate from './components/postItems/PostSubItemCreate';
-import PostSubItemEdit from './components/postItems/PostSubItemEdit';
+import EmployeeRating from './components/employeeRatings/EmployeeRating';
+import EmployeeRatingCreate from './components/employeeRatings/EmployeeRatingCreate';
+import EmployeeRatingEdit from './components/employeeRatings/EmployeeRatingEdit';
 
-import ViewItem from './components/viewItems/ViewItem';
-import ViewItemCreate from './components/viewItems/ViewItemCreate';
-import ViewItemEdit from './components/viewItems/ViewItemEdit';
-import ViewItemList from './components/viewItems/ViewItemList';
-import ViewSubItemCreate from './components/viewItems/ViewSubItemCreate';
-import ViewSubItemEdit from './components/viewItems/ViewSubItemEdit';
+import AutoService from './components/autoServices/AutoService';
+import AutoServiceCreate from './components/autoServices/AutoServiceCreate';
+import AutoServiceEdit from './components/autoServices/AutoServiceEdit';
+import AutoServiceList from './components/autoServices/AutoServiceList';
+import EmployeeCreate from './components/autoServices/EmployeeCreate';
+import EmployeeEdit from './components/autoServices/EmployeeEdit';
 function App() {
   return (
     <AuthProvider>
@@ -27,19 +24,16 @@ function App() {
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
-          <Route path='/postItems/:id' element={<PostItem/>}/>
-          <Route path='/postItems/create' element={<PostItemCreate/>}/>
-          <Route path='/postItems/:id/edit' element={<PostItemEdit/>}/>
-          <Route path='/postItems' element={<PostItemList/>}/>
-          <Route path='/postItems/:postItemId/postSubItems/create' element={<PostSubItemCreate/>}/>
-          <Route path='/postItems/:postItemId/postSubItems/:id' element={<PostSubItemEdit/>}/>
+          <Route path='/employeeRatings/:id' element={<EmployeeRating/>}/>
+          <Route path='/employeeRatings/create' element={<EmployeeRatingCreate/>}/>
+          <Route path='/employeeRatings/:id/edit' element={<EmployeeRatingEdit/>}/>
 
-          <Route path='/viewItems/:id' element={<ViewItem/>}/>
-          <Route path='/viewItems/create' element={<ViewItemCreate/>}/>
-          <Route path='/viewItems/:id/edit' element={<ViewItemEdit/>}/>
-          <Route path='/viewItems' element={<ViewItemList/>}/>
-          <Route path='/viewItems/:viewItemId/viewSubItems/create' element={<ViewSubItemCreate/>}/>
-          <Route path='/viewItems/:viewItemId/viewSubItems/:id' element={<ViewSubItemEdit/>}/>
+          <Route path='/autoServices/:id' element={<AutoService/>}/>
+          <Route path='/autoServices/create' element={<AutoServiceCreate/>}/>
+          <Route path='/autoServices/:id/edit' element={<AutoServiceEdit/>}/>
+          <Route path='/autoServices' element={<AutoServiceList/>}/>
+          <Route path='/employees/create' element={<EmployeeCreate/>}/>
+          <Route path='/employees/:id' element={<EmployeeEdit/>}/>
 
         </Routes>
       </div>

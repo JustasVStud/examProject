@@ -1,35 +1,55 @@
 import { Container, Form, Row, Col, Button, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
-import { createPostItem } from '../service/postItem.service';
+import { getEmployee, editEmployee } from '../service/autoService.service';
 
-const postItemValidationSchema = Yup.object().shape({
-  title: Yup.string().required('Post Item title is required'),
+const employeeValidationSchema = Yup.object().shape({
+  title: Yup.string().required('View Item title is required'),
 });
 
-function PostItemCreate() {
+function EmployeeEdit() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const [showError, setShowError] = useState(false);
+  const [employee, setEmployee] = useState([]);
+  const {id} = useParams();
 
-  const handlePostItemCreation = async (values, {resetForm}) => {
+  useEffect(() => {
+    const fetchEmployee = async ( id) => {
+      try {
+        const fetchedEmployee = await getEmployee(id);
+        setEmployee(fetchedEmployee);
+      } catch (error) {
+        console.log(error);
+        setShowError(true);
+        setErrorMessage('Error fetching menu');
+      }
+    };
+    if(id !== undefined) {
+        fetchEmployee(id);
+    }
+  }, [id]);
+
+  const handleEmployeeUpdate = async (values, {resetForm}) => {
     try {
-      await createPostItem(values.title); 
+      if(id !== undefined){
+        await editEmployee( values.title); 
+    }
       resetForm();
-      navigate('/postItems');
+      navigate(`/autoServices/`);
     } catch (error) {
       console.log(error);
       setShowError(true);
-      setErrorMessage('Error creating postItem');
+      setErrorMessage('Error creating employee');
     }
   };
 
   return (
     <Container className="form-style">
       <Row>
-        <h3>Create PostItem</h3>
+        <h3>Edit Employee</h3>
       </Row>
       {showError && (
         <Row>
@@ -41,11 +61,11 @@ function PostItemCreate() {
       <Row>
         <Formik
           initialValues={{
-            title: '',
+            title: employee.title,
           }}
-          validationSchema={postItemValidationSchema}
+          validationSchema={employeeValidationSchema}
           onSubmit={(values, { resetForm }) => {
-            handlePostItemCreation(values, { resetForm });
+            handleEmployeeUpdate(values, { resetForm });
           }}
           enableReinitialize
         >
@@ -75,7 +95,7 @@ function PostItemCreate() {
               <Row className="form-buttons-container">
                 <Col>
                   <Button variant="primary" type="submit" disabled={!dirty}>
-                    Create PostItem
+                    Edit Employee
                   </Button>
                 </Col>
               </Row>
@@ -87,4 +107,4 @@ function PostItemCreate() {
   );
 }
 
-export default PostItemCreate;
+export default EmployeeEdit;

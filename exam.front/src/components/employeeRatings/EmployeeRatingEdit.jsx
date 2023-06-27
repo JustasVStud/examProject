@@ -3,53 +3,51 @@ import { Formik } from 'formik';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
-import { getViewSubItem, editViewSubItem } from '../service/viewItem.service';
+import { getEmployeeRating, editEmployeeRating } from '../service/employeeRating.service';
 
-const viewSubItemValidationSchema = Yup.object().shape({
-  title: Yup.string().required('View Item title is required'),
+const employeeRatingValidationSchema = Yup.object().shape({
+  title: Yup.string().required('Post Item title is required'),
 });
 
-function ViewSubItemEdit() {
+function EmployeeRatingEdit() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const [showError, setShowError] = useState(false);
-  const [viewSubItem, setViewSubItem] = useState([]);
-  const { viewItemId, id } = useParams();
+  const [employeeRating, setEmployeeRating] = useState([]);
+  const { id } = useParams();
 
   useEffect(() => {
-    const fetchViewSubItem = async (viewItemId, id) => {
+    const fetchEmployeeRating = async (id) => {
       try {
-        const fetchedViewSubItem = await getViewSubItem(viewItemId, id);
-        setViewSubItem(fetchedViewSubItem);
+        const fetchedEmployeeRating = await getEmployeeRating(id);
+        setEmployeeRating(fetchedEmployeeRating);
       } catch (error) {
         console.log(error);
         setShowError(true);
         setErrorMessage('Error fetching menu');
       }
     };
-    if( viewItemId!== undefined && id !== undefined) {
-        fetchViewSubItem(id);
+    if(id !== undefined) {
+        fetchEmployeeRating(id);
     }
-  }, [viewItemId, id]);
+  }, [id]);
   
-  const handleViewSubItemUpdate = async (values, {resetForm}) => {
+  const handleEmployeeRatingUpdate = async (values, {resetForm}) => {
     try {
-      if(viewItemId !== undefined && id !== undefined){
-        await editViewSubItem(viewItemId, values.title); 
-    }
+      await editEmployeeRating(values.title); 
       resetForm();
-      navigate(`/viewItems/${viewItemId}`);
+      navigate('/employeeRatings');
     } catch (error) {
       console.log(error);
       setShowError(true);
-      setErrorMessage('Error creating viewSubItem');
+      setErrorMessage('Error creating employeeRating');
     }
   };
 
   return (
     <Container className="form-style">
       <Row>
-        <h3>Edit ViewSubItem</h3>
+        <h3>Edit EmployeeRating</h3>
       </Row>
       {showError && (
         <Row>
@@ -61,11 +59,11 @@ function ViewSubItemEdit() {
       <Row>
         <Formik
           initialValues={{
-            title: viewSubItem.title,
+            title: employeeRating.title,
           }}
-          validationSchema={viewSubItemValidationSchema}
+          validationSchema={employeeRatingValidationSchema}
           onSubmit={(values, { resetForm }) => {
-            handleViewSubItemUpdate(values, { resetForm });
+            handleEmployeeRatingUpdate(values, { resetForm });
           }}
           enableReinitialize
         >
@@ -95,7 +93,7 @@ function ViewSubItemEdit() {
               <Row className="form-buttons-container">
                 <Col>
                   <Button variant="primary" type="submit" disabled={!dirty}>
-                    Edit ViewSubItem
+                    Edit EmployeeRating
                   </Button>
                 </Col>
               </Row>
@@ -107,4 +105,4 @@ function ViewSubItemEdit() {
   );
 }
 
-export default ViewSubItemEdit;
+export default EmployeeRatingEdit;

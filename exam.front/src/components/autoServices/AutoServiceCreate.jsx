@@ -7,7 +7,7 @@ import { createAutoService } from '../service/autoService.service';
 
 const autoServiceValidationSchema = Yup.object().shape({
   title: Yup.string().required('Auto service must have a name'),
-  adress: Yup.string().required('Auto service must have an adress'),
+  address: Yup.string().required('Auto service must have an adress'),
   director: Yup.string().required('Auto service must have a director'),
 
 });
@@ -19,7 +19,8 @@ function AutoServiceCreate() {
 
   const handleAutoServiceCreation = async (values, {resetForm}) => {
     try {
-      await createAutoService(values.title); 
+      console.log("tried");
+      await createAutoService(values); 
       resetForm();
       navigate('/autoServices');
     } catch (error) {
