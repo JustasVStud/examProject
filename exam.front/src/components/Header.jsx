@@ -13,9 +13,9 @@ function Header() {
                         <Nav.Link href='/login'>Login</Nav.Link>
                     ) : (
                         <>
-                        <Nav.Link href='/autoServices'>Auto Services</Nav.Link>
                         </>
                     )}
+                    <Nav.Link href='/autoServices'>Auto Services</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>

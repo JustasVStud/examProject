@@ -35,8 +35,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers(HttpMethod.GET, "/api/employeeRatings/**").hasAnyAuthority(ADMIN, USER)
-                        .requestMatchers(HttpMethod.POST, "/api/employeeRatings/**").hasAnyAuthority(ADMIN, USER)
+                        .requestMatchers(HttpMethod.GET, "/api/employeeRatings/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/employeeRatings/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/autoServices/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/autoServices/**").hasAuthority(ADMIN)
                         .requestMatchers(HttpMethod.GET, "/api/employees/**").permitAll()
