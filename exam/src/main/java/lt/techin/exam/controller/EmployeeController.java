@@ -19,52 +19,52 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import lt.techin.exam.dto.PostSubItemDto;
-import lt.techin.exam.service.PostSubItemService;
+import lt.techin.exam.dto.EmployeeDto;
+import lt.techin.exam.service.EmployeeService;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("api/")
-public class PostSubItemController {
+public class EmployeeController {
 	
 	@Autowired
-	private PostSubItemService postSubItemService;
+	private EmployeeService employeeService;
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-	@GetMapping("postItems/{postItemId}/postSubItems")
-	public ResponseEntity<List<PostSubItemDto>> getPostSubItems(
-			@PathVariable(value = "postItemId") Long postItemId){
-		return new ResponseEntity<>(postSubItemService.getPostSubItems(postItemId), HttpStatus.OK);
+	@GetMapping("autoServices/{autoServiceId}/employees")
+	public ResponseEntity<List<EmployeeDto>> getEmployees(
+			@PathVariable(value = "autoServiceId") Long autoServiceId){
+		return new ResponseEntity<>(employeeService.getEmployees(autoServiceId), HttpStatus.OK);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-	@GetMapping("postItems/{postItemId}/postSubItems/{id}")
-	public ResponseEntity<PostSubItemDto> getPostSubItemById(
-			@PathVariable(value = "postItemId") Long postItemId, 
+	@GetMapping("autoServices/{autoServiceId}/employees/{id}")
+	public ResponseEntity<EmployeeDto> getEmployeeById(
+			@PathVariable(value = "autoServiceId") Long autoServiceId, 
 			@PathVariable(value = "id") Long id){
-		return new ResponseEntity<>(postSubItemService.getPostSubItemById(postItemId, id), HttpStatus.OK);
+		return new ResponseEntity<>(employeeService.getEmployeeById(autoServiceId, id), HttpStatus.OK);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-	@PostMapping("postItems/{postItemId}/postSubItems")
-	public ResponseEntity<HttpStatus> createPostSubItem(
-			@PathVariable(value = "postItemId") Long postItemId, 
-			@RequestBody PostSubItemDto postSubItemDto){
-		postSubItemService.createPostSubItem(postItemId, postSubItemDto);
+	@PostMapping("autoServices/{autoServiceId}/employees")
+	public ResponseEntity<HttpStatus> createEmployee(
+			@PathVariable(value = "autoServiceId") Long autoServiceId, 
+			@RequestBody EmployeeDto employeeDto){
+		employeeService.createEmployee(autoServiceId, employeeDto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-	@PatchMapping("postItems/{postItemId}/postSubItems/{id}")
-	public ResponseEntity<HttpStatus> updatePostSubItem(
-			@PathVariable(value = "postItemId") Long postItemId, 
+	@PatchMapping("autoServices/{autoServiceId}/employees/{id}")
+	public ResponseEntity<HttpStatus> updateEmployee(
+			@PathVariable(value = "autoServiceId") Long autoServiceId, 
 			@PathVariable(value = "id") Long id, 
-			@RequestBody PostSubItemDto postSubItemDto){
-		postSubItemService.updatePostSubItem(postItemId, id, postSubItemDto);
+			@RequestBody EmployeeDto employeeDto){
+		employeeService.updateEmployee(autoServiceId, id, employeeDto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-	@DeleteMapping("postItems/{postItemId}/postSubItems/{id}")
-	public ResponseEntity<HttpStatus> deletePostSubItem(
-			@PathVariable(value = "postItemId") Long postItemId, 
+	@DeleteMapping("autoServices/{autoServiceId}/employees/{id}")
+	public ResponseEntity<HttpStatus> deleteEmployee(
+			@PathVariable(value = "autoServiceId") Long autoServiceId, 
 			@PathVariable(value = "id") Long id){
-		postSubItemService.deletePostSubItem(postItemId, id);
+		employeeService.deleteEmployee(autoServiceId, id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

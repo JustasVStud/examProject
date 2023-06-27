@@ -22,41 +22,41 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lt.techin.exam.dto.AutoServiceDto;
 import lt.techin.exam.security.CustomUserDetails;
-import lt.techin.exam.service.ViewItemService;
+import lt.techin.exam.service.AutoServiceService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/viewItems")
-public class ViewItemController {
+@RequestMapping("api/autoServices")
+public class AutoServiceController {
 	
 	@Autowired
-	private ViewItemService viewItemService;
+	private AutoServiceService autoServiceService;
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@GetMapping
-	public ResponseEntity<List<AutoServiceDto>> getViewItems(@AuthenticationPrincipal CustomUserDetails currentUser){
-		return new ResponseEntity<>(viewItemService.getViewItems(), HttpStatus.OK);
+	public ResponseEntity<List<AutoServiceDto>> getAutoServices(@AuthenticationPrincipal CustomUserDetails currentUser){
+		return new ResponseEntity<>(autoServiceService.getAutoServices(), HttpStatus.OK);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@GetMapping("/{id}")
-	public ResponseEntity<AutoServiceDto> getViewItemById(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long id){
-		return new ResponseEntity<>(viewItemService.getViewItemById(id), HttpStatus.OK);
+	public ResponseEntity<AutoServiceDto> getAutoServiceById(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long id){
+		return new ResponseEntity<>(autoServiceService.getAutoServiceById(id), HttpStatus.OK);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@PostMapping()
-	public ResponseEntity<HttpStatus> createViewItem(@AuthenticationPrincipal CustomUserDetails currentUser, @RequestBody AutoServiceDto viewItemDto){
-		viewItemService.createViewItem(viewItemDto);
+	public ResponseEntity<HttpStatus> createAutoService(@AuthenticationPrincipal CustomUserDetails currentUser, @RequestBody AutoServiceDto autoServiceDto){
+		autoServiceService.createAutoService(autoServiceDto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@PatchMapping("/{id}")
-	public ResponseEntity<HttpStatus> updateViewItem(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long id, @RequestBody AutoServiceDto viewItemDto){
-		viewItemService.updateViewItem(id, viewItemDto);
+	public ResponseEntity<HttpStatus> updateAutoService(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long id, @RequestBody AutoServiceDto autoServiceDto){
+		autoServiceService.updateAutoService(id, autoServiceDto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
 	@DeleteMapping("/{id}")
-	public ResponseEntity<HttpStatus> deleteViewItem(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long id){
-		viewItemService.deleteViewItem(id);
+	public ResponseEntity<HttpStatus> deleteAutoService(@AuthenticationPrincipal CustomUserDetails currentUser, @PathVariable Long id){
+		autoServiceService.deleteAutoService(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

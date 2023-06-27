@@ -35,10 +35,10 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers(HttpMethod.GET, "/api/postItems/**").hasAnyAuthority(ADMIN, USER)
-                        .requestMatchers(HttpMethod.POST, "/api/postItems/**").hasAnyAuthority(ADMIN, USER)
-                        .requestMatchers(HttpMethod.GET, "/api/viewItems/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "api/viewItems/**").hasAuthority(ADMIN)
+                        .requestMatchers(HttpMethod.GET, "/api/employeeRatings/**").hasAnyAuthority(ADMIN, USER)
+                        .requestMatchers(HttpMethod.POST, "/api/employeeRatings/**").hasAnyAuthority(ADMIN, USER)
+                        .requestMatchers(HttpMethod.GET, "/api/autoServices/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/autoServices/**").hasAuthority(ADMIN)
                         .requestMatchers("/api/users", "/api/users/**").hasAuthority(ADMIN)
                         .requestMatchers("/public/**", "/auth/**").permitAll()
                         .requestMatchers("/",

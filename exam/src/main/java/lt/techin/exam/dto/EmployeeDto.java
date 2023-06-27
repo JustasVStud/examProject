@@ -13,5 +13,5 @@ public class EmployeeDto {
 	private String surname;
 	private String specialty;
 	private String city;
-	private String autoServiceId;
+	private Long autoServiceId;
 }

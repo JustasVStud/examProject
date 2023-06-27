@@ -11,5 +11,5 @@ import lt.techin.exam.entity.EmployeeRating;
 public interface EmployeeRatingRepository extends JpaRepository<EmployeeRating, Long>{
 	
 	@Query("SELECT er FROM EmployeeRating er WHERE er.user.id = :userId")
-	List<EmployeeRating> findEmployeeRating(@Param("userId") Long userId);
+	List<EmployeeRating> findEmployeeRatings(@Param("userId") Long userId);
 }

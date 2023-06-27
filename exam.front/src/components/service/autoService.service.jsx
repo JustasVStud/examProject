@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { authHeader } from '../auth/auth.service';
 
-const BASE_URL = 'http://localhost:8080/api/viewItems'
+const BASE_URL = 'http://localhost:8080/api/autoServices'
 
-export const getViewItems = async() => {
+export const getAutoServices = async() => {
     try{
         const response = await axios.get(BASE_URL, {
             headers: authHeader()
@@ -14,7 +14,7 @@ export const getViewItems = async() => {
     }
 }
 
-export const getViewItem= async(id) => {
+export const getAutoService= async(id) => {
     try{
         const response = await axios.get(`${BASE_URL}/${id}`, {
             headers: authHeader()
@@ -25,9 +25,9 @@ export const getViewItem= async(id) => {
     }
 }
 
-export const createViewItem = async(title) => {
+export const createAutoService = async(values) => {
     try{
-        const response = await axios.post(`${BASE_URL}`, {title}, {
+        const response = await axios.post(`${BASE_URL}`, values, {
             headers: authHeader()
         });
         return response.data;
@@ -36,9 +36,9 @@ export const createViewItem = async(title) => {
     }
 }
 
-export const editViewItem = async(id, title) => {
+export const editAutoService = async(id, values) => {
     try {
-        const response = await axios.patch(`${BASE_URL}/${id}`, {title}, {
+        const response = await axios.patch(`${BASE_URL}/${id}`, values, {
             headers: authHeader()
         });
         return response.data;
@@ -47,7 +47,7 @@ export const editViewItem = async(id, title) => {
     }
 }
 
-export const deleteViewItem = async(id) => {
+export const deleteAutoService = async(id) => {
     try{
         const response = await axios.delete(`${BASE_URL}/${id}`, {
             headers: authHeader()
@@ -58,9 +58,9 @@ export const deleteViewItem = async(id) => {
     }
 }
 
-export const getViewSubItems = async(viewItemId) => {
+export const getEmployees = async(autoServiceId) => {
     try{
-        const response = await axios.get(`${BASE_URL}/${viewItemId}/viewSubItems`, {
+        const response = await axios.get(`${BASE_URL}/${autoServiceId}/employees`, {
             headers: authHeader()
         });
         return response.data;
@@ -69,9 +69,9 @@ export const getViewSubItems = async(viewItemId) => {
     }
 }
 
-export const getViewSubItem = async(viewItemId, viewSubItemId) => {
+export const getEmployee = async(autoServiceId, employeeId) => {
     try{
-        const response = await axios.get(`${BASE_URL}/${viewItemId}/viewSubItems/${viewSubItemId}`, {
+        const response = await axios.get(`${BASE_URL}/${autoServiceId}/employees/${employeeId}`, {
             headers: authHeader()
         });
         return response.data;
@@ -79,9 +79,9 @@ export const getViewSubItem = async(viewItemId, viewSubItemId) => {
         throw error;
     }
 }
-export const createViewSubItem = async(viewItemId, title) => {
+export const createEmployee = async(autoServiceId, values) => {
     try{
-        const response = await axios.post(`${BASE_URL}/${viewItemId}/viewSubItems`, {title}, {
+        const response = await axios.post(`${BASE_URL}/${autoServiceId}/employees`, values, {
             headers: authHeader()
         });
         return response.data;
@@ -89,10 +89,10 @@ export const createViewSubItem = async(viewItemId, title) => {
         throw error;
     }
 }
-export const editViewSubItem = async (viewItemId, viewSubItemId, title ) => {
+export const editEmployee = async (autoServiceId, employeeId, values ) => {
     try {
-        const response = await axios.patch(`${BASE_URL}/${viewItemId}/viewSubItems/${viewSubItemId}`,
-        {title},
+        const response = await axios.patch(`${BASE_URL}/${autoServiceId}/employees/${employeeId}`,
+        values,
         {
             headers: authHeader()
         }
@@ -102,9 +102,9 @@ export const editViewSubItem = async (viewItemId, viewSubItemId, title ) => {
         throw error;
     }
 }
-export const deleteViewSubItem = async(viewItemId, viewSubItemId) =>{
+export const deleteEmployee = async(autoServiceId, employeeId) =>{
     try {
-        const response = await axios.delete(`${BASE_URL}/${viewItemId}/viewSubItems/${viewSubItemId}`,
+        const response = await axios.delete(`${BASE_URL}/${autoServiceId}/employees/${employeeId}`,
         { headers: authHeader() }
         )
         return response.data;

@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Button, Card, Container, Row, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import { getViewItems } from '../service/viewItem.service';
-import { deleteViewItem } from '../service/viewItem.service';
+import { getAutoServices } from '../service/autoService.service';
+import { deleteAutoService } from '../service/autoService.service';
 
 
-function ViewItemList() {
-    const [viewItems, setViewItems] = useState([]);
+function AutoServiceList() {
+    const [autoServices, setAutoServices] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-  const fetchViewItems = async () => {
+  const fetchAutoServices = async () => {
     try {
       setIsLoading(true);
-      const viewItems = await getViewItems();
-      setViewItems(viewItems);
+      const autoServices = await getAutoServices();
+      setAutoServices(autoServices);
     } catch (error) {
       console.log(error);
     } finally {
@@ -21,13 +21,13 @@ function ViewItemList() {
     }
   };
   useEffect(() => {
-    fetchViewItems();
+    fetchAutoServices();
   }, []);
 
-  const handleViewItemDelete = async (viewItemId) => {
+  const handleAutoServiceDelete = async (autoServiceId) => {
     try {
-      await deleteViewItem(viewItemId);
-      fetchViewItems();
+      await deleteAutoService(autoServiceId);
+      fetchAutoServices();
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +36,7 @@ function ViewItemList() {
   return (
     <Container>
       <Row>
-        <h2>ViewItems</h2>
+        <h2>AutoServices</h2>
       </Row>
       <Row>
         {isLoading? (
@@ -44,25 +44,25 @@ function ViewItemList() {
                 <span className="visually-hidden">Loading...</span>
               </Spinner>
         ): (
-            viewItems.length > 0 ? (
-              viewItems.map((viewItem) => (
-                <Card key={viewItem.id}>
-                  <Link to={`/viewItems/${viewItem.id}`}>
+            autoServices.length > 0 ? (
+              autoServices.map((autoService) => (
+                <Card key={autoService.id}>
+                  <Link to={`/autoServices/${autoService.id}`}>
                     <Card.Body>
-                      <Card.Title>{viewItem.title}</Card.Title>
-                      <Button onClick={() => handleViewItemDelete(viewItem.id)}>Delete ViewItem</Button>
+                      <Card.Title>{autoService.title}</Card.Title>
+                      <Button onClick={() => handleAutoServiceDelete(autoService.id)}>Delete AutoService</Button>
                     </Card.Body>
                   </Link>
                 </Card>
               ))
             ) : (
-              <h4>No ViewItems were found</h4>
+              <h4>No AutoServices were found</h4>
             )
         )}
       </Row>
         <Row>
             <Button variant="sucess">
-              <Link to="/viewItems/create">
+              <Link to="/autoServices/create">
                 Create new
               </Link>
             </Button>
@@ -72,4 +72,4 @@ function ViewItemList() {
 }
 
 
-export default ViewItemList;
+export default AutoServiceList;

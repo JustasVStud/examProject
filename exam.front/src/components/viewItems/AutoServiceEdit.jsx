@@ -1,35 +1,53 @@
 import { Container, Form, Row, Col, Button, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
-import { createViewItem } from '../service/viewItem.service';
+import { getAutoService, editAutoService } from '../service/autoService.service';
 
-const viewItemValidationSchema = Yup.object().shape({
+const autoServiceValidationSchema = Yup.object().shape({
   title: Yup.string().required('View Item title is required'),
 });
 
-function ViewItemCreate() {
+function AutoServiceEdit() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const [showError, setShowError] = useState(false);
-
-  const handleViewItemCreation = async (values, {resetForm}) => {
+  const [autoService, setAutoService] = useState([]);
+  const { id } = useParams();
+  console.log(id);
+  useEffect(() => {
+    const fetchAutoService = async (id) => {
+      try {
+        const fetchedAutoService = await getAutoService(id);
+        setAutoService(fetchedAutoService);
+      } catch (error) {
+        console.log(error);
+        setShowError(true);
+        setErrorMessage('Error fetching menu');
+      }
+    };
+    if(id !== undefined) {
+        fetchAutoService(id);
+    }
+  }, [id]);
+  
+  const handleAutoServiceUpdate = async (values, {resetForm}) => {
     try {
-      await createViewItem(values.title); 
+      await editAutoService(values.title); 
       resetForm();
-      navigate('/viewItems');
+      navigate('/autoServices');
     } catch (error) {
       console.log(error);
       setShowError(true);
-      setErrorMessage('Error creating viewItem');
+      setErrorMessage('Error creating autoService');
     }
   };
 
   return (
     <Container className="form-style">
       <Row>
-        <h3>Create ViewItem</h3>
+        <h3>Edit AutoService</h3>
       </Row>
       {showError && (
         <Row>
@@ -41,11 +59,11 @@ function ViewItemCreate() {
       <Row>
         <Formik
           initialValues={{
-            title: '',
+            title: autoService.title,
           }}
-          validationSchema={viewItemValidationSchema}
+          validationSchema={autoServiceValidationSchema}
           onSubmit={(values, { resetForm }) => {
-            handleViewItemCreation(values, { resetForm });
+            handleAutoServiceUpdate(values, { resetForm });
           }}
           enableReinitialize
         >
@@ -75,7 +93,7 @@ function ViewItemCreate() {
               <Row className="form-buttons-container">
                 <Col>
                   <Button variant="primary" type="submit" disabled={!dirty}>
-                    Create ViewItem
+                    Edit AutoService
                   </Button>
                 </Col>
               </Row>
@@ -87,4 +105,4 @@ function ViewItemCreate() {
   );
 }
 
-export default ViewItemCreate;
+export default AutoServiceEdit;

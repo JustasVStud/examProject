@@ -17,7 +17,7 @@ import lt.techin.exam.repository.EmployeeRatingRepository;
 import lt.techin.exam.repository.UserRepository;
 
 @Service
-public class PostItemService {
+public class EmployeeRatingService {
 	
 	@Autowired
 	private EmployeeRatingRepository employeeRatingRepository;
@@ -26,40 +26,40 @@ public class PostItemService {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public List<EmployeeRatingDto> getPostItems(Long userId) {
-		List<EmployeeRating> employeeRatings = employeeRatingRepository.findPostItems(userId);
+	public List<EmployeeRatingDto> getEmployeeRatings(Long userId) {
+		List<EmployeeRating> employeeRatings = employeeRatingRepository.findEmployeeRatings(userId);
 		if (employeeRatings.isEmpty()) {
-			throw new NoEntries("postItems");
+			throw new NoEntries("employeeRatings");
 		}
-		return employeeRatings.stream().map(postItem -> modelMapper.map(postItem, EmployeeRatingDto.class)).toList();
+		return employeeRatings.stream().map(employeeRating -> modelMapper.map(employeeRating, EmployeeRatingDto.class)).toList();
 	}
 	 
-	public EmployeeRatingDto getPostItemById(Long id, Long userId) {
-		EmployeeRating employeeRating =  employeeRatingRepository.findById(id).orElseThrow(() -> new NotFound("postItem", "id", id.toString()));
+	public EmployeeRatingDto getEmployeeRatingById(Long id, Long userId) {
+		EmployeeRating employeeRating =  employeeRatingRepository.findById(id).orElseThrow(() -> new NotFound("employeeRating", "id", id.toString()));
 		if(!employeeRating.getUser().getId().equals(userId)) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user");
 		}
 		return modelMapper.map(employeeRating, EmployeeRatingDto.class);
 	}
 	
-	public void createPostItem(Long userId, EmployeeRatingDto postItemDto) { 
-		EmployeeRating employeeRating = modelMapper.map(postItemDto, EmployeeRating.class);
+	public void createEmployeeRating(Long userId, EmployeeRatingDto employeeRatingDto) { 
+		EmployeeRating employeeRating = modelMapper.map(employeeRatingDto, EmployeeRating.class);
 		User user = userRepository.findById(userId).orElseThrow(() -> new NotFound("user", "id", userId.toString()));
 		employeeRating.setUser(user);
 		employeeRatingRepository.save(employeeRating);
 	}
 	
-	public void updatePostItem(Long id, Long userId, EmployeeRatingDto updatedPostItemDto) {
-		EmployeeRating existingPostItem = employeeRatingRepository.findById(id).orElseThrow(() -> new NotFound("postItem", "id", id.toString()));
-		if(!existingPostItem.getUser().getId().equals(userId)) {
+	public void updateEmployeeRating(Long id, Long userId, EmployeeRatingDto updatedEmployeeRatingDto) {
+		EmployeeRating existingEmployeeRating = employeeRatingRepository.findById(id).orElseThrow(() -> new NotFound("employeeRating", "id", id.toString()));
+		if(!existingEmployeeRating.getUser().getId().equals(userId)) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user");
 		}
-		existingPostItem.setTitle(updatedPostItemDto.getTitle());
-		employeeRatingRepository.save(existingPostItem);
+		//existingEmployeeRating.setTitle(updatedEmployeeRatingDto.getTitle());
+		employeeRatingRepository.save(existingEmployeeRating);
 	}
 	
-	public void deletePostItem(Long id, Long userId) {
-		EmployeeRating employeeRating =  employeeRatingRepository.findById(id).orElseThrow(() -> new NotFound("postItem", "id", id.toString()));
+	public void deleteEmployeeRating(Long id, Long userId) {
+		EmployeeRating employeeRating =  employeeRatingRepository.findById(id).orElseThrow(() -> new NotFound("employeeRating", "id", id.toString()));
 		if(!employeeRating.getUser().getId().equals(userId)) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user");
 		}
