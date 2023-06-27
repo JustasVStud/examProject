@@ -80,7 +80,7 @@ function AutoService() {
               {isAdmin && 
               <Row>
                 <Button variant='warning'>
-                  <Link to={`/autoServices/${autoService.id}/edit`}>Edit View Item</Link>
+                  <Link to={`/autoServices/${autoService.id}/edit`}>Edit Auto service</Link>
                 </Button>
                 <Button variant='success'>
                   <Link to={`/employees/create`}>Add employee</Link>

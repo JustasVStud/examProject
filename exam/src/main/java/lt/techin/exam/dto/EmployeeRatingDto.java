@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmployeeRatingDto {
-	private Long id;
 	private BigDecimal rating;
+	private Long employeeId;
 }

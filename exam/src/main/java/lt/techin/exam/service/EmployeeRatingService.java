@@ -33,6 +33,8 @@ public class EmployeeRatingService {
 	
 	public void createEmployeeRating(EmployeeRatingDto employeeRatingDto) { 
 		EmployeeRating employeeRating = modelMapper.map(employeeRatingDto, EmployeeRating.class);
+		Employee employee = employeeRepository.findById(employeeRatingDto.getEmployeeId()).orElseThrow(() -> new NotFound("employee", "id", employeeRatingDto.getEmployeeId().toString()));
+		employeeRating.setEmployee(employee);
 		employeeRatingRepository.save(employeeRating);
 	}
 	
