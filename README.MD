@@ -23,3 +23,5 @@
 4. norint naudoti mysql reikia susikurti savo mysql hoste tuscia schema su vardu exam ir jai sukurti nauja vartotoja su visais grants kurio username ir password yra Exam.user1
 5. tai susikofigavus Back end IDE reikia pasileisti ExamAplication spring boot aplikacija
 6. Vs code arba exam.from per terminala pasileisti npm start komanda.
+7. admin login - admin/admin
+8. user login - user/user
