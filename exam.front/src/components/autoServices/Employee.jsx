@@ -5,24 +5,40 @@ function Employee({employee, employeeId, onDelete}) {
 
     const handleEmployeeDelete = async () => {
       try {
-        await deleteEmployee( employeeId);
+        await deleteEmployee(employeeId);
         onDelete();
       } catch (error) {
         console.log(error);
       }
     };
-
+    
     return ( 
         <Card>
             <Card.Body>
                 <Row>
                 <Col>
-                    {employee}
+                    {employee.name}
                 </Col>
                 <Col>
-                    <Link to={`/${employeeId}`}>Edit employee</Link>
+                    {employee.surname}
                 </Col>
-                <Col><Button onClick={handleEmployeeDelete}>Delete view sub item</Button></Col>
+                <Col>
+                    {employee.specialty}
+                </Col>
+                <Col>
+                    {employee.city}
+                </Col>
+                <Col>
+                    <Link to={`/employees/${employeeId}`}>Edit employee</Link>
+                </Col>
+                <Col>
+                    <Link to={`/employeeRatings/create`}>
+                      <Button>
+                        Rate employee
+                      </Button>
+                      </Link>
+                </Col>
+                <Col><Button onClick={handleEmployeeDelete}>Delete employee</Button></Col>
 
                 </Row>
             </Card.Body>

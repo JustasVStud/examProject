@@ -4,8 +4,12 @@ import { useParams } from 'react-router-dom';
 import { getAutoService, getEmployees } from '../service/autoService.service';
 import { Link } from 'react-router-dom';
 import Employee from './Employee';
+import { useContext } from 'react';
+import { AuthContext } from '../auth/AuthContext';
 
 function AutoService() {
+  const authContext = useContext(AuthContext);
+  const isAdmin = authContext.hasRole('ADMIN');
     const [autoService, setAutoService] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [employees, setEmployees] = useState([]);
@@ -67,7 +71,7 @@ function AutoService() {
               <Row>
               {employees.length > 0 ? (
               employees.map((employee) => (
-                <Employee employee={employee} autoServiceId={autoService.id} employeeId={employee.id} key={employee.id} onDelete={handleEmployeeDelete}  />
+                <Employee employee={employee} employeeId={employee.id} key={employee.id} onDelete={handleEmployeeDelete}  />
               ))
               ):(
                 <Row>There are no currently no employess in this auto service</Row>

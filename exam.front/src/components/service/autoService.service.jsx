@@ -63,7 +63,7 @@ export const deleteAutoService = async(id) => {
 
 export const getEmployees = async(autoServiceId) => {
     try{
-        const response = await axios.get(`${BASE_URL_EMPLOYEE}/${autoServiceId}`, {
+        const response = await axios.get(`${BASE_URL_EMPLOYEE}/autoService/${autoServiceId}`, {
             headers: authHeader()
         });
         return response.data;

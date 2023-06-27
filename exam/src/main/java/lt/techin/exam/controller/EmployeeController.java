@@ -30,7 +30,7 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 	@Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-	@GetMapping("/{autoServiceId}")
+	@GetMapping("autoService/{autoServiceId}")
 	public ResponseEntity<List<EmployeeDto>> getEmployees(
 			@PathVariable(value = "autoServiceId") Long autoServiceId){
 		return new ResponseEntity<>(employeeService.getEmployees(autoServiceId), HttpStatus.OK);
